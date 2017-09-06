@@ -1,26 +1,43 @@
 import { Component } from '@angular/core';
 
-var n = prompt("Enter your numbers").split(",");
-console.log(n);
+var n : string[];
+n = prompt("Enter numbers separated by commas").split(",");
 
-var counts : { [nr: string]: number } = {};
-n.forEach((x) => { 
-    counts[x] = (counts[x] || 0) +1; 
-});
+n.sort();
 
-document.write(
-`
-  <h1>Enter numbers when prompted!</h1>
-  <p>You entered following numbers:</p>${n}<br/>
-  <p>The occurence is as follows:</p>${JSON.stringify(counts)}
-`
-);
+var current : string = null;
+var count : number =  0;
+
+for(var i = 0; i < n.length; i++)
+  {
+  if(n[i] != current)
+    {
+      if(count > 0)
+        {
+            document.write( 
+            `
+              ${current}   =>   ${count} </br>
+            `);
+        }
+          current= n[i];
+          count=1;
+    }
+  else {count++};
+  }
+if(count>0) 
+  {
+   document.write( 
+            `
+              ${current}  =>  ${count}  </br>
+            `);
+  }
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'Counting Duplicates';
 }
